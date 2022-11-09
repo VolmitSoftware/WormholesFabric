@@ -1,9 +1,8 @@
 package com.volmit.wormholes.utils;
 
-import com.volmit.wormholes.Cuboid;
-import com.volmit.wormholes.block.BlockRegistry;
-import com.volmit.wormholes.block.FrameBlock;
-import com.volmit.wormholes.item.ItemWand;
+import com.volmit.wormholes.content.BlockRegistry;
+import com.volmit.wormholes.content.FrameBlock;
+import com.volmit.wormholes.content.ItemWand;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;

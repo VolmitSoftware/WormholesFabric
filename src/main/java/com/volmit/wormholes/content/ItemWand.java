@@ -1,8 +1,7 @@
-package com.volmit.wormholes.item;
+package com.volmit.wormholes.content;
 
-import com.volmit.wormholes.Cuboid;
-import com.volmit.wormholes.Framer;
-import com.volmit.wormholes.block.BlockRegistry;
+import com.volmit.wormholes.utils.Cuboid;
+import com.volmit.wormholes.utils.Framer;
 import com.volmit.wormholes.utils.PortalUtil;
 import com.volmit.wormholes.utils.SoundUtil;
 import net.minecraft.entity.Entity;

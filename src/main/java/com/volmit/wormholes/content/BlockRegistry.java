@@ -1,4 +1,4 @@
-package com.volmit.wormholes.block;
+package com.volmit.wormholes.content;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;

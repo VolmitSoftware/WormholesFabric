@@ -1,6 +1,6 @@
-package com.volmit.wormholes;
+package com.volmit.wormholes.utils;
 
-import com.volmit.wormholes.block.BlockRegistry;
+import com.volmit.wormholes.content.BlockRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

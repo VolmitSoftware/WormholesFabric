@@ -1,8 +1,8 @@
 package com.volmit.wormholes;
 
 import com.mojang.logging.LogUtils;
-import com.volmit.wormholes.block.BlockRegistry;
-import com.volmit.wormholes.item.ItemRegistry;
+import com.volmit.wormholes.content.BlockRegistry;
+import com.volmit.wormholes.content.ItemRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import org.slf4j.Logger;

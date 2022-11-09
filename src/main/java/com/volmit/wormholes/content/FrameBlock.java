@@ -1,4 +1,4 @@
-package com.volmit.wormholes.block;
+package com.volmit.wormholes.content;
 
 import com.volmit.wormholes.utils.SoundUtil;
 import net.minecraft.block.Block;

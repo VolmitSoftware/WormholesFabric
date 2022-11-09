@@ -1,6 +1,5 @@
-package com.volmit.wormholes.item;
+package com.volmit.wormholes.content;
 
-import com.volmit.wormholes.block.BlockRegistry;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -35,7 +34,7 @@ public class ItemRegistry {
     public static final Item FRAME_GREEN = registerItem("frame_green", new BlockItem(BlockRegistry.FRAME_GREEN, new Item.Settings().group(ITEM_GROUP)));
 
     private static Item registerItem(String id, Item item) {
-        
+
         return Registry.register(Registry.ITEM, new Identifier(MOD_ID, id), item);
     }
 
