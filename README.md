@@ -7,8 +7,6 @@ https://github.com/VolmitSoftware/WormholesFML
 Wormholes is a recreation of the Spigot plugin Wormholes but now using the **ImmersivePortals API  
 *Please note that this mod is merely a proof of concept at this stage, but all blocks have crafting recipes and are in the creative tab "wormholes" and the mod is* **intended for Survival usage at the end of the day.**
 
-**Demo Videos:**
-
 ### **Quick Start Guide:**
 1: Craft/Get the Portal frame blocks.
 2: Craft/Get the wand.  
