@@ -28,5 +28,4 @@ public class Wormholes implements ModInitializer {
         ItemRegistry.registerItems();
         BlockRegistry.registerBlocks();
     }
-
 }
