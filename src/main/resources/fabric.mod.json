@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "wormholes",
+  "version": "${version}",
+  "name": "Wormholes",
+  "description": "This is a Fabric port of the Wormholes FML mod that we made but ported to Fabric.",
+  "authors": ["NextdoorPsycho"],
+  "contact": {},
+  "license": "GNU General Public License v3.0",
+  "icon": "assets/wormholes/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.volmit.wormholes.Wormholes"
+    ]
+  },
+  "mixins": [
+    "wormholes.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.10",
+    "fabric": "*",
+    "minecraft": "1.18.2"
+  }
+}

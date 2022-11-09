@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "wormholes:frame",
+    "count": 4
+  },
+  "pattern": [
+    "AEA",
+    "EPE",
+    "AEA"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:purpur_block"
+    },
+    "A": {
+      "item": "minecraft:amethyst_block"
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    }
+  }
+}
