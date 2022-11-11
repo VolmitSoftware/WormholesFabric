@@ -16,6 +16,9 @@ public class ItemRegistry {
 
     public static final Item WAND = registerItem("wand", new ItemWand(new Item.Settings().group(ITEM_GROUP)));
 
+    public static final Item PORTKEY = registerItem("portkey", new Item(new Item.Settings().group(ITEM_GROUP)));
+    public static final Item PORTBRICK = registerItem("portbrick", new Item(new Item.Settings().group(ITEM_GROUP)));
+
     public static final Item FRAME = registerItem("frame", new BlockItem(BlockRegistry.FRAME, new Item.Settings().group(ITEM_GROUP)));
     public static final Item FRAME_BLACK = registerItem("frame_black", new BlockItem(BlockRegistry.FRAME_BLACK, new Item.Settings().group(ITEM_GROUP)));
     public static final Item FRAME_BLUE = registerItem("frame_blue", new BlockItem(BlockRegistry.FRAME_BLUE, new Item.Settings().group(ITEM_GROUP)));
