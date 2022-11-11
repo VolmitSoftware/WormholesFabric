@@ -45,15 +45,13 @@ public class ItemWand extends Item {
         if (world.isClient()) {
             return super.use(world, user, hand);
         }
-        if (user.isSneaking() && getNearestEntity(user).getEntity() instanceof Portal pPortal) {
-//            List<Portal> portals = PortalManipulation.getPortalCluster(world, pPortal.getOriginPos(), pPortal.getNormal(), p -> true);
-//            for (Portal portal : portals) {
-//                Quaternion q = new Quaternion(0, 180, 0, true);
-//                portal.axisW = RotationHelper.getRotated(q, portal.axisW);
-//                portal.axisH = RotationHelper.getRotated(q, portal.axisH);
-//                portal.reloadAndSyncToClient();
-//            }
-//              Bad code, but it works. The api that's exposed for the code above is broken, and does not attach to respected portals. this does the same thing but for whatever reason works.
+        if (user.isSneaking() && getNearestEntity(user).getEntity() instanceof Portal p) {
+
+            if (p.getDestDim().toString().contains("wormholes") || p.getOriginDim().toString().contains("wormholes")) {
+                SoundUtil.play((ServerWorld) user.getWorld(), user.getPos(), SoundEvents.BLOCK_ENDER_CHEST_OPEN, 1f, 3.25f);
+                return super.use(world, user, hand);
+            }
+
             if (user.getServer() != null && user.getWorld().getServer() != null) {
 
                 System.out.println("Rotating portal: " + user.getYaw() / 100);
