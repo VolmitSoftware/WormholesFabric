@@ -4,6 +4,8 @@ import com.volmit.wormholes.utils.Cuboid;
 import com.volmit.wormholes.utils.Framer;
 import com.volmit.wormholes.utils.PortalUtil;
 import com.volmit.wormholes.utils.SoundUtil;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -31,7 +33,7 @@ import java.util.*;
 public class ItemWand extends Item {
     public ItemWand(Settings settings) {
         super(settings.maxCount(1).fireproof()
-                .maxDamage(86).rarity(Rarity.RARE));
+                .maxDamage(86).rarity(Rarity.EPIC));
     }
 
     public void clear(ItemStack item) {
@@ -133,6 +135,13 @@ public class ItemWand extends Item {
             }
         }
         return super.useOnBlock(context);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
+        tooltip.add(Text.of("§5Right-Click§7 to select/bind a frame"));
+        tooltip.add(Text.of("§5Sneak-Right-Click§7 to rotate the portal"));
+        tooltip.add(Text.of("§7§oRotates the portal §5180°§7,§o Based on Looking Direction"));
     }
 
     public boolean hasData(ItemStack stack) {

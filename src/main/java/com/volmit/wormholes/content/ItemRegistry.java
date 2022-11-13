@@ -15,8 +15,8 @@ public class ItemRegistry {
     public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.build(new Identifier(MOD_ID, MOD_ID), () -> new ItemStack(ItemRegistry.WAND));
 
     public static final Item WAND = registerItem("wand", new ItemWand(new Item.Settings().group(ITEM_GROUP)));
+    public static final Item PORTKEY = registerItem("portkey", new ItemPortkey(new Item.Settings().group(ITEM_GROUP)));
 
-    public static final Item PORTKEY = registerItem("portkey", new Item(new Item.Settings().group(ITEM_GROUP)));
     public static final Item PORTBRICK = registerItem("portbrick", new Item(new Item.Settings().group(ITEM_GROUP)));
 
     public static final Item FRAME = registerItem("frame", new BlockItem(BlockRegistry.FRAME, new Item.Settings().group(ITEM_GROUP)));
