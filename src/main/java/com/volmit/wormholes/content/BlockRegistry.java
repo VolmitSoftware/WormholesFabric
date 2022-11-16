@@ -119,7 +119,7 @@ public class BlockRegistry {
         return bl;
     }
 
-    public static void registerBlocks(){
+    public static void registerBlocks() {
         // This is just here to make sure the class is loaded
     }
 

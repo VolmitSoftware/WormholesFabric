@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Set;
 
 public class Framer {
+    private final Set<BlockPos> positionsFound = new HashSet<>();
+    private final BlockPos cursor;
+    private final World level;
     List<BlockPos> check = List.of(
             new BlockPos(1, 0, 0),
             new BlockPos(-1, 0, 0),
@@ -18,9 +21,6 @@ public class Framer {
             new BlockPos(0, 0, 1),
             new BlockPos(0, 0, -1)
     );
-    private final Set<BlockPos> positionsFound = new HashSet<>();
-    private final BlockPos cursor;
-    private final World level;
     private boolean done = false;
 
     public Framer(World level, BlockPos cursor) {

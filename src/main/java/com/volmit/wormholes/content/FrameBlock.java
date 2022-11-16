@@ -30,12 +30,6 @@ public class FrameBlock extends Block {
                 .with(FRAME_ACTIVE, false));
     }
 
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(FRAME_INNER);
-        builder.add(FRAME_ACTIVE);
-    }
-
     public static int sign(int i) {
         return i - MAX_PORTAL_RADIUS;
     }
@@ -77,6 +71,12 @@ public class FrameBlock extends Block {
             SoundUtil.play(level, new Box(id).getCenter(), SoundEvents.ENTITY_IRON_GOLEM_DEATH, 0.25f, 0.25f);
             SoundUtil.play(level, new Box(id).getCenter(), SoundEvents.BLOCK_CONDUIT_DEACTIVATE, 1f, 0.25f);
         }
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(FRAME_INNER);
+        builder.add(FRAME_ACTIVE);
     }
 
     @Override

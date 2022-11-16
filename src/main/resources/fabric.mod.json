@@ -4,7 +4,9 @@
   "version": "${version}",
   "name": "Wormholes",
   "description": "This is a Fabric port of the Wormholes FML mod that we made but ported to Fabric.",
-  "authors": ["NextdoorPsycho"],
+  "authors": [
+    "NextdoorPsycho"
+  ],
   "contact": {},
   "license": "GNU General Public License v3.0",
   "icon": "assets/wormholes/icon.png",

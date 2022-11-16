@@ -4,7 +4,6 @@ import com.volmit.wormholes.utils.Cuboid;
 import com.volmit.wormholes.utils.Framer;
 import com.volmit.wormholes.utils.PortalUtil;
 import com.volmit.wormholes.utils.SoundUtil;
-import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -34,6 +33,96 @@ public class ItemWand extends Item {
     public ItemWand(Settings settings) {
         super(settings.maxCount(1).fireproof()
                 .maxDamage(86).rarity(Rarity.EPIC));
+    }
+
+    public static Direction computeDirection(BlockPos point, BlockPos toward, Cuboid cc) {
+        Set<Direction> allowed = new HashSet<>();
+
+        if (cc == null) {
+            allowed.addAll(Arrays.stream(Direction.values()).toList());
+        } else if (cc.getSizeY() == 1) {
+            allowed.add(Direction.UP);
+            allowed.add(Direction.DOWN);
+        } else if (cc.getSizeX() == 1) {
+            allowed.add(Direction.EAST);
+            allowed.add(Direction.WEST);
+        } else if (cc.getSizeZ() == 1) {
+            allowed.add(Direction.NORTH);
+            allowed.add(Direction.SOUTH);
+        }
+
+        BlockPos vec = toward.subtract(point);
+        double x = vec.getX();
+        double y = vec.getY();
+        double z = vec.getZ();
+        double l = Math.sqrt(x * x + y * y + z * z);
+        x /= l;
+        y /= l;
+        z /= l;
+
+        Vec3d v = new Vec3d(x, y, z);
+
+        double m = Double.MAX_VALUE;
+        Direction d = Direction.NORTH;
+
+        for (Direction i : allowed) {
+            double dx = v.distanceTo(new Vec3d(i.getOffsetX(), i.getOffsetY(), i.getOffsetZ()));
+
+            if (dx < m) {
+                m = dx;
+                d = i;
+            }
+        }
+
+        return d;
+    }
+
+    @NotNull
+    public static EntityHitResult getNearestEntity(PlayerEntity player) {
+        float playerRotX = player.getRotationClient().x;
+        float playerRotY = player.getRotationClient().y;
+        Vec3d startPos = player.getEyePos();
+        float f2 = (float) Math.cos(-playerRotY * ((float) Math.PI / 180F) - (float) Math.PI);
+        float f3 = (float) Math.sin(-playerRotY * ((float) Math.PI / 180F) - (float) Math.PI);
+        float f4 = (float) -Math.cos(-playerRotX * ((float) Math.PI / 180F));
+        float additionY = (float) Math.sin(-playerRotX * ((float) Math.PI / 180F));
+        float additionX = f3 * f4;
+        float additionZ = f2 * f4;
+        double d0 = 15;
+        Vec3d endVec = startPos.add((double) additionX * d0, (double) additionY * d0, (double) additionZ * d0);
+        Box startEndBox = new Box(startPos, endVec);
+        Entity entity = player;
+        for (Entity entity1 : player.world.getOtherEntities(player, startEndBox, (val) -> true)) {
+            Box box = entity1.getBoundingBox().expand(entity1.getTargetingMargin());
+            Optional<Vec3d> optional = box.raycast(startPos, endVec);
+            if (box.contains(startPos)) {
+                if (d0 >= 0.0D) {
+                    entity = entity1;
+                    startPos = optional.orElse(startPos);
+                    d0 = 0.0D;
+                }
+            } else if (optional.isPresent()) {
+                Vec3d Vec3d1 = optional.get();
+                double d1 = startPos.squaredDistanceTo(Vec3d1);
+                if (d1 < d0 || d0 == 0.0D) {
+                    if (entity1.getRootVehicle() == player.getRootVehicle() && !entity1.hasPlayerRider()) {
+                        if (d0 == 0.0D) {
+                            entity = entity1;
+                            startPos = Vec3d1;
+                        }
+                    } else {
+                        entity = entity1;
+                        startPos = Vec3d1;
+                        d0 = d1;
+                    }
+                }
+            }
+        }
+        if (entity == player) {
+            return new EntityHitResult(player);
+        } else {
+            return new EntityHitResult(entity);
+        }
     }
 
     public void clear(ItemStack item) {
@@ -156,48 +245,6 @@ public class ItemWand extends Item {
         return stack.getOrCreateNbt().getString("wormholesdim");
     }
 
-    public static Direction computeDirection(BlockPos point, BlockPos toward, Cuboid cc) {
-        Set<Direction> allowed = new HashSet<>();
-
-        if (cc == null) {
-            allowed.addAll(Arrays.stream(Direction.values()).toList());
-        } else if (cc.getSizeY() == 1) {
-            allowed.add(Direction.UP);
-            allowed.add(Direction.DOWN);
-        } else if (cc.getSizeX() == 1) {
-            allowed.add(Direction.EAST);
-            allowed.add(Direction.WEST);
-        } else if (cc.getSizeZ() == 1) {
-            allowed.add(Direction.NORTH);
-            allowed.add(Direction.SOUTH);
-        }
-
-        BlockPos vec = toward.subtract(point);
-        double x = vec.getX();
-        double y = vec.getY();
-        double z = vec.getZ();
-        double l = Math.sqrt(x * x + y * y + z * z);
-        x /= l;
-        y /= l;
-        z /= l;
-
-        Vec3d v = new Vec3d(x, y, z);
-
-        double m = Double.MAX_VALUE;
-        Direction d = Direction.NORTH;
-
-        for (Direction i : allowed) {
-            double dx = v.distanceTo(new Vec3d(i.getOffsetX(), i.getOffsetY(), i.getOffsetZ()));
-
-            if (dx < m) {
-                m = dx;
-                d = i;
-            }
-        }
-
-        return d;
-    }
-
     public Direction getDirection(ItemStack stack) {
         return Direction.byId(stack.getOrCreateNbt().getInt("wormholesdir"));
     }
@@ -215,54 +262,6 @@ public class ItemWand extends Item {
                 c.getUpperY(),
                 c.getUpperZ(),
         });
-    }
-
-    @NotNull
-    public static EntityHitResult getNearestEntity(PlayerEntity player) {
-        float playerRotX = player.getRotationClient().x;
-        float playerRotY = player.getRotationClient().y;
-        Vec3d startPos = player.getEyePos();
-        float f2 = (float) Math.cos(-playerRotY * ((float) Math.PI / 180F) - (float) Math.PI);
-        float f3 = (float) Math.sin(-playerRotY * ((float) Math.PI / 180F) - (float) Math.PI);
-        float f4 = (float) -Math.cos(-playerRotX * ((float) Math.PI / 180F));
-        float additionY = (float) Math.sin(-playerRotX * ((float) Math.PI / 180F));
-        float additionX = f3 * f4;
-        float additionZ = f2 * f4;
-        double d0 = 15;
-        Vec3d endVec = startPos.add((double) additionX * d0, (double) additionY * d0, (double) additionZ * d0);
-        Box startEndBox = new Box(startPos, endVec);
-        Entity entity = player;
-        for (Entity entity1 : player.world.getOtherEntities(player, startEndBox, (val) -> true)) {
-            Box box = entity1.getBoundingBox().expand(entity1.getTargetingMargin());
-            Optional<Vec3d> optional = box.raycast(startPos, endVec);
-            if (box.contains(startPos)) {
-                if (d0 >= 0.0D) {
-                    entity = entity1;
-                    startPos = optional.orElse(startPos);
-                    d0 = 0.0D;
-                }
-            } else if (optional.isPresent()) {
-                Vec3d Vec3d1 = optional.get();
-                double d1 = startPos.squaredDistanceTo(Vec3d1);
-                if (d1 < d0 || d0 == 0.0D) {
-                    if (entity1.getRootVehicle() == player.getRootVehicle() && !entity1.hasPlayerRider()) {
-                        if (d0 == 0.0D) {
-                            entity = entity1;
-                            startPos = Vec3d1;
-                        }
-                    } else {
-                        entity = entity1;
-                        startPos = Vec3d1;
-                        d0 = d1;
-                    }
-                }
-            }
-        }
-        if (entity == player) {
-            return new EntityHitResult(player);
-        } else {
-            return new EntityHitResult(entity);
-        }
     }
 
     public Cuboid getCuboid(ItemStack item) {

@@ -12,9 +12,14 @@ import static com.volmit.wormholes.Wormholes.MOD_ID;
 
 public class ItemRegistry {
 
-    public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.build(new Identifier(MOD_ID, MOD_ID), () -> new ItemStack(ItemRegistry.WAND));
+    private static Item registerItem(String id, Item item) {
 
-    public static final Item WAND = registerItem("wand", new ItemWand(new Item.Settings().group(ITEM_GROUP)));
+        return Registry.register(Registry.ITEM, new Identifier(MOD_ID, id), item);
+    }    public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.build(new Identifier(MOD_ID, MOD_ID), () -> new ItemStack(ItemRegistry.WAND));
+
+    public static void registerItems() {
+        // This is just here to make sure the class is loaded
+    }    public static final Item WAND = registerItem("wand", new ItemWand(new Item.Settings().group(ITEM_GROUP)));
     public static final Item PORTKEY = registerItem("portkey", new ItemPortkey(new Item.Settings().group(ITEM_GROUP)));
 
     public static final Item PORTBRICK = registerItem("portbrick", new Item(new Item.Settings().group(ITEM_GROUP)));
@@ -36,13 +41,8 @@ public class ItemRegistry {
     public static final Item FRAME_YELLOW = registerItem("frame_yellow", new BlockItem(BlockRegistry.FRAME_YELLOW, new Item.Settings().group(ITEM_GROUP)));
     public static final Item FRAME_GREEN = registerItem("frame_green", new BlockItem(BlockRegistry.FRAME_GREEN, new Item.Settings().group(ITEM_GROUP)));
 
-    private static Item registerItem(String id, Item item) {
 
-        return Registry.register(Registry.ITEM, new Identifier(MOD_ID, id), item);
-    }
 
-    public static void registerItems(){
-        // This is just here to make sure the class is loaded
-    }
+
 
 }

@@ -54,7 +54,7 @@ public class PortalUtil {
         Vec3d pos2 = frame2.getCenter();
         Vec3d angle1 = new Vec3d(dir1.getOffsetX(), dir1.getOffsetY(), dir1.getOffsetZ());
         Vec3d angle2 = new Vec3d(dir2.getOffsetX(), dir2.getOffsetY(), dir2.getOffsetZ());
-        
+
         DQuaternion q1 = getQuaternion(angle1, angle2, dir1.equals(dir2.getOpposite()));
         DQuaternion q2 = getQuaternion(angle2, angle1, dir2.equals(dir1.getOpposite()));
         Portal portal = Portal.entityType.create(l1);
